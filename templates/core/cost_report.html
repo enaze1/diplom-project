@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Обеспечение СИЗ{% endblock %}
+{% block crumb %}Обеспечение СИЗ{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <div>
+        <h1>Расчет обеспечения СИЗ</h1>
+        <p>Количество сотрудников x норма выдачи x цена средства индивидуальной защиты.</p>
+    </div>
+</div>
+<div class="table-wrap">
+    <table>
+        <thead><tr><th>Инструктаж</th><th>Сотрудник</th><th>Расчетная стоимость СИЗ</th></tr></thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td><a href="{% url 'order_detail' order.pk %}">№{{ order.number }}</a></td>
+                <td>{{ order.customer }}</td>
+                <td>{{ order.material_cost|floatformat:2 }} руб.</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="3">Инструктажей пока нет.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

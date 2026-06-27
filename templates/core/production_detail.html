@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Проверка №{{ production.number }}{% endblock %}
+{% block crumb %}Проверка №{{ production.number }}{% endblock %}
+{% block content %}
+<div class="page-heading"><h1>Проверка №{{ production.number }}</h1></div>
+<div class="two-columns">
+    <section class="section-block">
+        <h2>Выявленные риски и мероприятия</h2>
+        {% for item in production.products.all %}
+            <p>{{ item.product }} - {{ item.quantity }} замеч.</p>
+        {% empty %}
+            <p>Нет данных.</p>
+        {% endfor %}
+        <form method="post" class="form-stack">
+            {% csrf_token %}
+            {{ product_form.as_p }}
+            <button class="button primary" name="add_product" type="submit">Добавить мероприятие</button>
+        </form>
+    </section>
+    <section class="section-block">
+        <h2>Рекомендованные СИЗ</h2>
+        {% for item in production.materials.all %}
+            <p>{{ item.material }} - {{ item.quantity }} {{ item.material.unit }}</p>
+        {% empty %}
+            <p>Нет данных.</p>
+        {% endfor %}
+        <form method="post" class="form-stack">
+            {% csrf_token %}
+            {{ material_form.as_p }}
+            <button class="button primary" name="add_material" type="submit">Добавить СИЗ</button>
+        </form>
+    </section>
+</div>
+{% endblock %}

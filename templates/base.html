@@ -1,0 +1,46 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Охрана труда{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body>
+{% if user.is_authenticated %}
+<header class="topbar">
+    <a class="brand" href="{% url 'dashboard' %}">Охрана труда</a>
+    <div class="user-area">
+        <span>{{ user.username }}</span>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button class="link-button" type="submit">Выйти</button>
+        </form>
+    </div>
+</header>
+<div class="app-layout">
+    <nav class="sidebar" aria-label="Основное меню">
+        <a href="{% url 'dashboard' %}">Главная</a>
+        <a href="{% url 'customers' %}">Сотрудники</a>
+        <a href="{% url 'products' %}">Программы</a>
+        <a href="{% url 'materials' %}">СИЗ</a>
+        <a href="{% url 'specifications' %}">Нормы СИЗ</a>
+        <a href="{% url 'orders' %}">Инструктажи</a>
+        <a href="{% url 'production' %}">Проверки</a>
+        <a href="{% url 'cost_report' %}">Обеспечение СИЗ</a>
+        {% if user.is_staff %}<a href="{% url 'users' %}">Пользователи</a>{% endif %}
+        <a href="{% url 'help' %}">Справка</a>
+    </nav>
+    <main class="content">
+        <nav class="breadcrumbs" aria-label="Хлебные крошки">
+            <a href="{% url 'dashboard' %}">Главная</a><span>/</span><span>{% block crumb %}Обзор{% endblock %}</span>
+        </nav>
+        {% block content %}{% endblock %}
+    </main>
+</div>
+{% else %}
+<main class="login-layout">{% block public_content %}{% endblock %}</main>
+{% endif %}
+</body>
+</html>

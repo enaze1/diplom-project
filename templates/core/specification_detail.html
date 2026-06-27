@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ specification.name }}{% endblock %}
+{% block crumb %}Состав нормы{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <div>
+        <h1>{{ specification.name }}</h1>
+        <p>{{ specification.product }} · стоимость комплекта: {{ specification.unit_material_cost|floatformat:2 }} руб.</p>
+    </div>
+</div>
+<div class="two-columns">
+    <section class="section-block">
+        <h2>Средства индивидуальной защиты</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>СИЗ</th><th>Норма</th><th>Цена</th></tr></thead>
+                <tbody>
+                {% for item in specification.items.all %}
+                    <tr><td>{{ item.material }}</td><td>{{ item.quantity }} {{ item.material.unit }}</td><td>{{ item.material.price }} руб.</td></tr>
+                {% empty %}
+                    <tr><td colspan="3">СИЗ не добавлены.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section class="section-block">
+        <h2>Добавить СИЗ</h2>
+        <form method="post" class="form-stack">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="button primary" type="submit">Добавить</button>
+        </form>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Нормы СИЗ{% endblock %}
+{% block crumb %}Нормы СИЗ{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <h1>Нормы обеспечения СИЗ</h1>
+    <a class="button primary" href="{% url 'specification_add' %}">Добавить</a>
+</div>
+<div class="table-wrap">
+    <table>
+        <thead><tr><th>Название</th><th>Программа</th><th>Действует</th><th></th></tr></thead>
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.product }}</td>
+                <td>{{ item.is_active|yesno:"Да,Нет" }}</td>
+                <td><a href="{% url 'specification_detail' item.pk %}">Состав</a></td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="4">Норм обеспечения пока нет.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

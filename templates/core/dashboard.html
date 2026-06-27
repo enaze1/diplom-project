@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <div>
+        <h1>Рабочий стол</h1>
+        <p>Основные показатели системы охраны труда.</p>
+    </div>
+</div>
+<section class="stats">
+    <div class="stat"><strong>{{ customer_count }}</strong><span>сотрудников</span></div>
+    <div class="stat"><strong>{{ product_count }}</strong><span>программ обучения</span></div>
+    <div class="stat"><strong>{{ material_count }}</strong><span>видов СИЗ</span></div>
+    <div class="stat accent"><strong>{{ order_count }}</strong><span>инструктажей</span></div>
+</section>
+<section class="section-block">
+    <h2>Последние инструктажи</h2>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>Номер</th><th>Дата</th><th>Сотрудник</th><th>Статус</th></tr></thead>
+            <tbody>
+            {% for order in recent_orders %}
+                <tr>
+                    <td><a href="{% url 'order_detail' order.pk %}">№{{ order.number }}</a></td>
+                    <td>{{ order.date }}</td>
+                    <td>{{ order.customer }}</td>
+                    <td>{{ order.get_status_display }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="4">Инструктажей пока нет.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

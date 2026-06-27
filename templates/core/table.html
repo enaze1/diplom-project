@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block crumb %}{{ title }}{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <h1>{{ title }}</h1>
+    {% if add_url %}<a class="button primary" href="{% url add_url %}">Добавить</a>{% endif %}
+</div>
+<div class="table-wrap">
+    <table>
+        <thead><tr>{% for header in headers %}<th>{{ header }}</th>{% endfor %}</tr></thead>
+        <tbody>
+        {% for row in rows %}
+            <tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>
+        {% empty %}
+            <tr><td colspan="10">Записей пока нет.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

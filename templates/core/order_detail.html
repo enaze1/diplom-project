@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Инструктаж №{{ order.number }}{% endblock %}
+{% block crumb %}Инструктаж №{{ order.number }}{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <div>
+        <h1>Инструктаж №{{ order.number }}</h1>
+        <p>{{ order.customer }} · {{ order.date }} · обеспечение СИЗ {{ order.material_cost|floatformat:2 }} руб.</p>
+    </div>
+</div>
+<div class="two-columns">
+    <section class="section-block">
+        <h2>Программы</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Программа</th><th>Количество</th><th>Стоимость</th><th>Сумма</th></tr></thead>
+                <tbody>
+                {% for item in order.items.all %}
+                    <tr>
+                        <td>{{ item.product }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.unit_price }} руб.</td>
+                        <td>{{ item.sale_total|floatformat:2 }} руб.</td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="4">Программы не добавлены.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section class="section-block">
+        <h2>Добавить программу</h2>
+        <form method="post" class="form-stack">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="button primary" type="submit">Добавить</button>
+        </form>
+    </section>
+</div>
+{% endblock %}

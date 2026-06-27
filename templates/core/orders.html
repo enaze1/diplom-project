@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Инструктажи{% endblock %}
+{% block crumb %}Инструктажи{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <h1>Инструктажи</h1>
+    <a class="button primary" href="{% url 'order_add' %}">Добавить</a>
+</div>
+<div class="table-wrap">
+    <table>
+        <thead><tr><th>Номер</th><th>Дата</th><th>Сотрудник</th><th>Статус</th><th></th></tr></thead>
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td>№{{ item.number }}</td>
+                <td>{{ item.date }}</td>
+                <td>{{ item.customer }}</td>
+                <td>{{ item.get_status_display }}</td>
+                <td><a href="{% url 'order_detail' item.pk %}">Открыть</a></td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="5">Инструктажей пока нет.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

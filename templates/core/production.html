@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Проверки{% endblock %}
+{% block crumb %}Проверки{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <h1>Проверки условий труда</h1>
+    <a class="button primary" href="{% url 'production_add' %}">Добавить</a>
+</div>
+<div class="table-wrap">
+    <table>
+        <thead><tr><th>Номер</th><th>Дата</th><th></th></tr></thead>
+        <tbody>
+        {% for item in items %}
+            <tr><td>№{{ item.number }}</td><td>{{ item.date }}</td><td><a href="{% url 'production_detail' item.pk %}">Открыть</a></td></tr>
+        {% empty %}
+            <tr><td colspan="3">Проверок пока нет.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
