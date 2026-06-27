@@ -24,11 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY", "student-project-secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "1").lower() in {"1", "true", "yes", "on"}
+DEBUG = os.getenv("DEBUG", "0" if os.getenv("RENDER") else "1").lower() in {"1", "true", "yes", "on"}
 
 ALLOWED_HOSTS = [
     host.strip()
-    for host in os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost,testserver").split(",")
+    for host in os.getenv(
+        "ALLOWED_HOSTS",
+        "127.0.0.1,localhost,testserver,.onrender.com",
+    ).split(",")
     if host.strip()
 ]
 
