@@ -1,0 +1,12 @@
+.git
+.venv
+venv
+__pycache__
+*.pyc
+db.sqlite3
+staticfiles
+server.*.log
+.env
+.idea
+.vscode
+.docker-data
